@@ -85,4 +85,13 @@ os tipos de requisição http indicam a ação que o usuario deseja executar no 
 
 - o php de fato e uma das linguagens de programação mais populares da atualidade. Ela permite que voce crie aplicaçoes web robustas e muito simplificadas e diretas. a linguagem tem diversos recursos que facilitam e aceleram o processo de desenvolvimento de sites e sistems para web. E além do mais, ela ainda tem um ótimo ecossistema, uma excelente comunidade e um grande mercado de trabalho
 
-# passo a passo: instalação de php
+##### passo a passo: instalação de php
+- fazer o dowload do php (php.net)
+- ZIP - nts(non thread safe) 8.5
+- Descompactar o Arquivo do PHP na pasta C:src\php (para descompactar usar o 7Zip = melhor) nunca salvar arquivos ou programas na raiz do sistema(C:)
+
+- Adicionar a Pasta do PHP(C:\src\php) as Variaveis de Ambientes di sistema (PATH)
+- verificar a instalação rodando o comando
+```bash
+php --version
+```
