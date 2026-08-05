@@ -35,3 +35,17 @@ O backend (ou "lado do servidor") é a estrutura interna que roda nos bastidores
 ### o que e http?
 - hypertext /transfer Protocol é um protocolo de transferencia de informaçoes da www(Word Widw Web) e em outros sistemas de rede.
 ele permite a requisição de respostas de rrecursos  como imagens, arquivos e textos
+
+
+*HTTP*, Hypertext Transfer Protocol, é um protocolo de comunicação utilizado para transferência de informações na WWW (World wide Web) e em outros sistemas de redes.
+
+O HTTP é a base para que o cliente e um servidor web troquem informações. Ele permite a requisição e a resposta de recurso como, imagens, arquivos e textos.
+
+
+```mermaid
+
+graph TD
+    
+    A[Navegador]
+    B[HTTP]
+    C[Servidor]
