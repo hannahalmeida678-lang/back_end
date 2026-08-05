@@ -77,3 +77,6 @@ os tipos de requisição http indicam a ação que o usuario deseja executar no 
 - **delete**: deleta um dado do servidor
 - **post**: envia dados novos para *criar* algo ou processar informações no servidor
 - **PUT/PATCH**: Modificar um dados já existente.
+---
+
+### iniciando o php
