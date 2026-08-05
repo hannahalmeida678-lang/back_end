@@ -49,3 +49,28 @@ graph TD
     A[Navegador]
     B[HTTP]
     C[Servidor]
+
+     A --> |request| B
+    B --> |request| C
+    C --> |response| B
+    B --> |response| A
+```
+
+# aula 2: como funciona  na pratica o backend
+
+**Acao do usuario**: envia uma soliçitação pela UI (interface do usuario). 
+### Exemplo:
+- tela do celular
+- navegador de internet, alexa, IOT...
+
+**enviar uma requisição**: a UI transforma ação do usuario em uma requisição HTTP.
+
+**o processo BackEnd**: o codigo Backend recebe pedido, valida os dados e decide o que fazer. Ex: consultar uma infomacao no BD(Base de Dados).
+
+- **Resposta**: O servidor devolde o resultado para a UI. Ex: Um Login Autorizado, Confirmação de uma Compra...
+
+---
+## tipo de requisiçao
+os tipos de requisição http indicam a ação que o usuario deseja executar no servidor,  as principais são:
+
+-  **get**: pede dados de um lugar especifico do servidor. "nao faz alterações no servidor
