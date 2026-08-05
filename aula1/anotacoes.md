@@ -95,3 +95,6 @@ os tipos de requisição http indicam a ação que o usuario deseja executar no 
 ```bash
 php --version
 ```
+
+##### criando minha primeira aplicacao php
+
