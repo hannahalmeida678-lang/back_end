@@ -1,0 +1,37 @@
+# Urso backEnd - 225hrs - tecnico em desenvolvimento de sistema -SENAI
+
+profº diogo TB
+
+escola SENAI Americana
+
+2º semestre 2026
+
+## Objetivo do curso
+
+- desenvolver aplicações web server side, utilizando linguagem PHP;
+- Aplicar Sintaxe nativa PHP (Vanila);
+- manipulação HTTP;
+- Persistencia de dados;
+- seguranca contra SQL infection/CSRF;
+- refatoração emPOO (programaçao orientada ao projeto);
+- arquitetura MVC(model, view, controller);
+- utilização do frame work Laravel;
+
+obs: framework - um conjunto de bibliotecas que oferecem uma solução completa para desenvolvimento de alguma coisa
+
+## cronograma do semestre
+
+carga Horária: 105h 1º semestre e 120h 2º semestre
+
+duração: 2oh semanais 1º semestre e 20h semanais 2º semestre
+--
+
+
+### semana 1 introdução ao back end e configuração Ambiente PHP
+
+## o que e BackEnd?
+O backend (ou "lado do servidor") é a estrutura interna que roda nos bastidores de um site ou aplicativo, sendo responsável pela lógica de negócio, processamento de dados, segurança e armazenamento de informações. Enquanto o usuário interage diretamente com o visual da aplicação (o frontend), o backend processa o que não está visível aos olhos do público externo.Por exemplo, quando você faz login em uma rede social, o frontend exibe o campo para você digitar a sua senha. Ao clicar em "Entrar", o backend recebe os dados, valida se a senha está correta consultando um banco de dados e concede ou não o acesso.Principais Pilares do BackendServidores: Computadores ou sistemas em nuvem que hospedam o código e recebem as requisições enviadas pelos usuários.Banco de Dados: Sistemas onde todas as informações cruciais (como usuários, produtos e históricos) ficam salvas com segurança.APIs (Application Programming Interfaces): Pontes de comunicação que permitem que o backend converse com o frontend ou com serviços externos, como intermediadores de pagamento.Regras de Negócio: A lógica matemática e operacional do sistema, como calcular o frete de um produto ou aplicar um cupom de desconto.Tecnologias e Linguagens ComunsO desenvolvedor backend constrói essa arquitetura utilizando ferramentas específicas, incluindo:Linguagens de Programação: JavaScript (Node.js), Python, Java, C#, PHP e Go.Bancos de Dados Relacionais: MySQL e PostgreSQL.Bancos de Dados Não-Relacionais: MongoDB e Redis.
+
+### o que e http?
+- hypertext /transfer Protocol é um protocolo de transferencia de informaçoes da www(Word Widw Web) e em outros sistemas de rede.
+ele permite a requisição de respostas de rrecursos  como imagens, arquivos e textos
