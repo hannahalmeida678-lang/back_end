@@ -73,4 +73,7 @@ graph TD
 ## tipo de requisiçao
 os tipos de requisição http indicam a ação que o usuario deseja executar no servidor,  as principais são:
 
--  **get**: pede dados de um lugar especifico do servidor. "nao faz alterações no servidor
+-  **get**: pede dados de um lugar especifico do servidor. "nao faz alterações no servidor"
+- **delete**: deleta um dado do servidor
+- **post**: envia dados novos para *criar* algo ou processar informações no servidor
+- **PUT/PATCH**: Modificar um dados já existente.
