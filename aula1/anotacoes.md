@@ -107,4 +107,15 @@ php --version
     - PHP Cs Fixer => formatação de codigo(identação)
     - PHP Server => ajuda na criação de servidor local para PHP
 - desabilitamos o php nativo do vscode ( @builtin PPHP)
+
 2. Hello World(muito importante)
+
+#### Estudo sobre VAriaveis e constantes
+
+- declarar variaveis e alocas um espaço na memoria que permite a inclusão e manipulação de dado
+
+**variaveis**
+
+- devem ser declaradas usando "$" antes do nome da variavel;
+- sao nao tipadas ( nao precisa declarar o tipo dela na criação),
+- podem der string, Numericas (interger e float), booleanas e Nulas. nao permite declaraçao de unfined
