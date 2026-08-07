@@ -98,3 +98,13 @@ php --version
 
 ##### criando minha primeira aplicacao php
 
+1. antes de começar a codar:
+- preparar meu VSCODE
+- criar um profile proprio para php
+- instalar extensoes nacessarias para transformar o VScode em uma IDE:
+    - PHP iteliphense =>permite a utililização de Snippets(atalhos de codigo)
+    - PHP Debug => ajuda a encontrar os erros de codigo
+    - PHP Cs Fixer => formatação de codigo(identação)
+    - PHP Server => ajuda na criação de servidor local para PHP
+- desabilitamos o php nativo do vscode ( @builtin PPHP)
+2. Hello World(muito importante)
