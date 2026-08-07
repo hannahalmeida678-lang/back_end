@@ -118,4 +118,11 @@ php --version
 
 - devem ser declaradas usando "$" antes do nome da variavel;
 - sao nao tipadas ( nao precisa declarar o tipo dela na criação),
-- podem der string, Numericas (interger e float), booleanas e Nulas. nao permite declaraçao de unfined
+- podem der string, Numericas (interger e float), booleanas e Nulas. nao permite declaraçao de undefined
+- usar o declare(strict_types=1); na primeira linha do arquivo; => blinda o sistema contra conflitos de tipos de variaveis
+
+**constantes**
+
+- não podem ser mudadas ou redeclaradas apos a criaçao
+- pode ser criadas usando "const" ou "define"
+- não permite interpolação
