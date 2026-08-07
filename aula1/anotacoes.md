@@ -126,3 +126,33 @@ php --version
 - não podem ser mudadas ou redeclaradas apos a criaçao
 - pode ser criadas usando "const" ou "define"
 - não permite interpolação
+
+## estudo de operadores
+
+**aritimeticos**: são realizados para realizas calculos
+
+|operador | nome| exemplo | resultado|
+| - | - | - | - |
+| + | adição | 10 + 5 | 15 |
+|- | subtraçao | 10-5 | 5 |
+| * | multiplicação | 10*5 | 50 |
+| / | divisão | 10/5 | 2|
+| % | modulo(resto) | 10%3 | 1 (10 div 3 da 3 sobra 1)
+| ** | expoente | 2**3 | 8(2 elevado a 3)
+
+obs: o operador % e melhor amigo de um programagor, permite ordenar listas e organizar fila e pilhas
+
+**relacionais**:ermite o Relacionamento entre dois ou mais valores, o resultado de uma operação é sempre uma booleana (verdadeiro ou falso).
+
+| operador | significado | exemplo | resultado |
+| - | - | - | - |
+| > | maior que | 18 > 18 | false |
+| >= | maior ou igual a | 18 >= 18 | true |
+| < | menor que | 10 < 20 | true |
+| <= | menor ou igual | 10 <= 5 | false |
+| == | comparacao de valor | "10" == 10 | true |
+| === | comparção escrita | "10" === 10 | false |
+| != | diferente | "10" != 10 | false |
+| !== | estritamente diferente | "10" !== 10 | true | 
+
+**logicos**:
