@@ -155,4 +155,16 @@ obs: o operador % e melhor amigo de um programagor, permite ordenar listas e org
 | != | diferente | "10" != 10 | false |
 | !== | estritamente diferente | "10" !== 10 | true | 
 
-**logicos**:
+**logicos**: permite a combinação entre sentenças.
+
+- operador AND (E) => && : para o resultado set verdadeiro, todas as combinaçoes tem que ser verdadeiras
+    - true && true => true
+    - true && false => false
+
+-operador OR (OU) => || : para o resultado sert verdadeiro , basta apenas uma condiçao ser verdadeira:
+    - false || true => true
+    - false || false => false
+
+- operador NOT (não) => ! : inverte a logica da operação,
+     - !true => false
+     - !false => true
