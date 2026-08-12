@@ -1,5 +1,5 @@
 body{
-    background: aliceblue;
+    background: rgb(236, 214, 235);
     margin: 0 auto;
 }
 
@@ -11,14 +11,14 @@ table{
 }
 
 th {
-    border: 1px solid #ccc;
+    border: 1px solid #aa0c6d;
     padding: 8px;
     text-align: right;
-    background-color: #f4f4f4;
+    background-color: #e479c4;
     font-weight: bold;
 }
 td {
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
     padding: 8px;
     text-align: left;
 }
