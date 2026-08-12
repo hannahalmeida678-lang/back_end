@@ -192,3 +192,22 @@ $valorFinal = $valorCompra * 0.9;
 }
 
 ```
+- uso de `if` e do `else`, 
+Exemplo: Aplicar um desconto de 10% para compras acima de 100 reais e 5%para as demais compras
+```mermaid
+
+graph LR
+
+    A[Comando] --> B{Condição}
+    B --> |true| C[Ação 1]
+    B --> |false| D[Ação 2]
+```
+
+```php
+if($valorcompra > 100){
+    $valorfinal = $valorCompra * 0.9;
+} else {
+    $$valorcompra = $valorcompra * 0.95;
+}
+
+```
