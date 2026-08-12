@@ -168,3 +168,27 @@ obs: o operador % e melhor amigo de um programagor, permite ordenar listas e org
 - operador NOT (não) => ! : inverte a logica da operação,
      - !true => false
      - !false => true
+
+     # semana 3 - Estrutura de Controle de Dados (Condicionais e Repetição)
+
+     - **Conteúdo**: Estrutura `if`, `else`, `elseif`, operadores ternarios, `match` => substituto do `switch/case` , loops `for`, `while`, `do-while` e `foreach`
+
+#### estrutura de controle de dados ajudam no processo de automatização em programa de sistemas
+
+##### condicionais (IF< ELSE,> ELSEIF)
+- uso do `if` apenas:
+Exemplo: aplicar desconto de 10% em compras acima de 100 Reais;
+
+```mermaid
+
+graph LR
+
+    A[comando]  --> B{condiçao} --> C(açao)
+```
+
+```php
+if($valorcompra > 100)  {
+$valorFinal = $valorCompra * 0.9;
+}
+
+```
