@@ -4,7 +4,7 @@ declare(strict_types=1);
 $peso = 54;
 $altura = 1.59;
 
-$IMC = ($peso * $altura);
+$IMC = $peso/($altura**2);
 
 if ($IMC < 18.5 ){
     echo "Abaixo do peso";
