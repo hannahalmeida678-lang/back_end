@@ -211,3 +211,99 @@ if($valorcompra > 100){
 }
 
 ```
+
+- Uso do `elseif` (if encadeado) => estrutura usada para manipulação de dados em duas ou mais condicionais
+exemplo: compras acima de 200 reais tem 15% de desconto, compras acima de 10 reais tem desconto de 10% e os demais tem 5% de desconto
+
+```mermaid
+
+graph LR
+A[comando] --> B{condiçao 1}
+B --> |true| C[ação 1]
+B -->|false| D{condiçao 2}
+B --> |true| E[Ação 2]
+B --> |false| F[ação 3]
+
+```
+
+ ```php
+if($valorcompra > 200){
+    $valorfinal = $valorcompra * 0.85;
+} elseif ($valorCompra > 100) {
+    $valorFinal = $valorCompra * 0.9;
+}
+else {
+    $valorFinal = $valorCompra * 0.95;
+}
+ ```
+
+ *obs*: sempre usar `elseif` para situaçoes que precisam de mais de uma condiçao, ou seja, fazer encadeamento, das condiçoes
+
+ -Uso *ERRADO* do if
+
+ ```php
+if($valorCompra > 200) {
+    $valorFinal = $valorCompra * 0.85;
+}
+if($valorCompra > 100) {
+    $valorFinal = $valorCompra * 0.9;
+} else {
+    $valorFinal = $valorCompra * 0.95;
+}
+
+ ```
+
+##### operadores ternários
+
+- Um atalho para uma estrutura condicional `if/else`, normalmente escrito em um a unica linha de codigo.
+
+`condiçao ? verdadeira : falsa`
+
+- Perfeito para decisões 
+
+Exemplo: verificar se a pessoa e maior de idade (18)
+
+```php
+$idade = 20
+
+$status = ($idade >= 18) ? "Maior de idade" : "mMenor de idade";
+$status2 = ($idade >= 60) "Idoso" : ($idade >= 18) ? "Adulto" : "Criança" ;
+
+echo $status 
+```
+
+#### expressão condicional `match` (PHP 8)
+
+No mercado atual de PHP não se usa mais uma `Switch/Case` para checar valores fixos, usa-se o `match`. Ele compara e retorna diretamente o resultado caso atenda a condiçao.
+
+```mermaid
+ graph TD
+    A[Valor] --> B[condicional]
+    B --> C[Ação1] 
+    B --> D[Ação2] 
+    B --> E[Ação3] 
+    B --> F[Ação4] 
+    B --> G[Ação ...] 
+    B --> H[Ação default] 
+
+```
+Exemplo: selecionar o dia da semana a partir de um Nº
+
+```php
+$DiaSemanaNum = date("W")
+
+$nomeDiaSemana = match($diaSemanaNum) {
+    "0" => "Domingo"
+    "1" => "Segunda"
+    "2" => "terça"
+    "3" => "Quarta"
+    "4" => "Quinta"
+    "5" => "Sexta"
+    "6" => "Sábado"
+    "default" => "Dia Inválido"
+
+};
+
+echo "Hoje é : $nomeDiaSemana
+
+```
