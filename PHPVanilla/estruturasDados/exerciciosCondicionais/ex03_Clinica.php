@@ -9,7 +9,7 @@ $IMC = $peso/($altura**2);
 if ($IMC < 18.5 ){
     echo "Abaixo do peso";
 }
-elseif($IMC == 18.5) {
+elseif($IMC >= 18.5) {
 echo "peso normal";
 }
 elseif($IMC > 30) {
