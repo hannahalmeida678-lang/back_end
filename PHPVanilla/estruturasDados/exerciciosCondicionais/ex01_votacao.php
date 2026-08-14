@@ -1,9 +1,9 @@
 <?php
     declare(strict_types=1);
 // Crie uma variável $idade.
-$idade = 20;
+$idade = 16;
 // Se a idade for menor que 16, exiba: "Voto Proibido".
-if ($idade <= 16) {
+if ($idade < 16) {
 echo "voto proibido";
 //Se a idade for entre 16 e 17, ou maior/igual a 70, exiba: "Voto Facultativo".
 
@@ -16,52 +16,3 @@ elseif ($idade >= 18) {
     echo "voto obrigatorio";
 }
 ?>
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
