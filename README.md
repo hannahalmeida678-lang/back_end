@@ -463,6 +463,8 @@ foreach ($preços as $produto => $preço){
 Desafio: fazer um simulador de cobrança (FINANSENAI)
 
 
+### correçao
+
 
 
 
