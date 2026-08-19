@@ -34,3 +34,5 @@ for ($mes = 1; $mes <= 12; $mes++){
      echo "$mes | $dividaInicial | $juros | $divida\n";
 }//\n quer dizer quebra de linha
 ?>
+
+

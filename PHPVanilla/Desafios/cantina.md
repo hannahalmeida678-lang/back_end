@@ -1,6 +1,10 @@
 
+# DESAFIO FINAL — SISTEMA DE PEDIDOS COM MENU - Estruturas de Dados
+
+
 
 ```php
+
 <?php
 
 // Produtos
@@ -16,6 +20,7 @@ $opcao = 0;
 
 // Menu
 do {
+
     echo "\n--- CANTINA SENAI ---\n";
     echo "1 - Listar produtos\n";
     echo "2 - Adicionar produto\n";
@@ -28,8 +33,12 @@ do {
     // Listar produtos
     if ($opcao == 1) {
 
+        echo "\n--- PRODUTOS ---\n";
+
         foreach ($produtos as $codigo => $produto) {
-            echo "$codigo | {$produto['nome']} | R$ {$produto['preco']} | Estoque: {$produto['estoque']}\n";
+            echo "$codigo - {$produto['nome']} | ";
+            echo "R$ " . number_format($produto['preco'], 2, ',', '.') . " | ";
+            echo "Estoque: {$produto['estoque']}\n";
         }
 
     // Adicionar produto
@@ -42,28 +51,52 @@ do {
             continue;
         }
 
-        $quantidade = 0;
+        if ($produtos[$codigo]["estoque"] <= 0) {
+            echo "Produto sem estoque!\n";
+            continue;
+        }
 
-        while ($quantidade <= 0 || $quantidade > $produtos[$codigo]["estoque"]) {
+        $quantidade = (int) readline("Quantidade: ");
 
-            $quantidade = (int) readline("Quantidade: ");
+        if ($quantidade <= 0) {
+            echo "Quantidade inválida!\n";
+            continue;
+        }
 
-            if ($quantidade <= 0) {
-                echo "Quantidade inválida!\n";
-            } elseif ($quantidade > $produtos[$codigo]["estoque"]) {
-                echo "Estoque insuficiente!\n";
+        if ($quantidade > $produtos[$codigo]["estoque"]) {
+            echo "Estoque insuficiente!\n";
+            continue;
+        }
+
+        // Retira do estoque
+        $produtos[$codigo]["estoque"] -= $quantidade;
+
+        // Verifica se o produto já está no pedido
+        $encontrado = false;
+
+        foreach ($pedido as $indice => $item) {
+
+            if ($item["codigo"] == $codigo) {
+
+                $pedido[$indice]["quantidade"] += $quantidade;
+                $encontrado = true;
+
+                break;
             }
         }
 
-        $produtos[$codigo]["estoque"] -= $quantidade;
+        // Se não estiver no pedido, adiciona
+        if (!$encontrado) {
 
-        $pedido[] = [
-            "nome" => $produtos[$codigo]["nome"],
-            "preco" => $produtos[$codigo]["preco"],
-            "quantidade" => $quantidade
-        ];
+            $pedido[] = [
+                "codigo" => $codigo,
+                "nome" => $produtos[$codigo]["nome"],
+                "preco" => $produtos[$codigo]["preco"],
+                "quantidade" => $quantidade
+            ];
+        }
 
-        echo "Produto adicionado!\n";
+        echo "Produto adicionado ao pedido!\n";
 
     // Resumo
     } elseif ($opcao == 3) {
@@ -73,26 +106,25 @@ do {
             continue;
         }
 
-        echo "\nProduto | Quantidade | Preço | Subtotal\n";
-
-        foreach ($pedido as $item) {
-            $subtotal = $item["quantidade"] * $item["preco"];
-
-            echo "{$item['nome']} | ";
-            echo "{$item['quantidade']} | ";
-            echo "R$ {$item['preco']} | ";
-            echo "R$ $subtotal\n";
-        }
+        echo "\n--- RESUMO DO PEDIDO ---\n";
 
         $total = 0;
 
-        for ($i = 0; $i < count($pedido); $i++) {
-            $total += $pedido[$i]["quantidade"] * $pedido[$i]["preco"];
+        foreach ($pedido as $item) {
+
+            $subtotal = $item["quantidade"] * $item["preco"];
+            $total += $subtotal;
+
+            echo "Produto: {$item['nome']}\n";
+            echo "Quantidade: {$item['quantidade']}\n";
+            echo "Preço: R$ " . number_format($item["preco"], 2, ',', '.') . "\n";
+            echo "Subtotal: R$ " . number_format($subtotal, 2, ',', '.') . "\n";
+            echo "-------------------------\n";
         }
 
-        echo "Total: R$ $total\n";
+        echo "Total: R$ " . number_format($total, 2, ',', '.') . "\n";
 
-    // Finalizar
+    // Finalizar compra
     } elseif ($opcao == 4) {
 
         if (empty($pedido)) {
@@ -102,11 +134,13 @@ do {
 
         $total = 0;
 
-        for ($i = 0; $i < count($pedido); $i++) {
-            $total += $pedido[$i]["quantidade"] * $pedido[$i]["preco"];
+        foreach ($pedido as $item) {
+            $total += $item["quantidade"] * $item["preco"];
         }
 
-        echo "Total da compra: R$ $total\n";
+        echo "\n--- FINALIZAR COMPRA ---\n";
+        echo "Total da compra: R$ " . number_format($total, 2, ',', '.') . "\n";
+
         echo "1 - Pix\n";
         echo "2 - Cartão\n";
         echo "3 - Dinheiro\n";
@@ -114,20 +148,27 @@ do {
         $pagamento = (int) readline("Pagamento: ");
 
         if ($pagamento == 1) {
+
             $total = $total * 0.95;
             echo "Desconto de 5% aplicado!\n";
+
         } elseif ($pagamento == 2) {
+
             echo "Sem desconto.\n";
+
         } elseif ($pagamento == 3) {
+
             $total = $total * 0.97;
             echo "Desconto de 3% aplicado!\n";
+
         } else {
+
             echo "Pagamento inválido!\n";
             continue;
         }
 
-        echo "Total final: R$ $total\n";
-        echo "Compra finalizada!\n";
+        echo "Total final: R$ " . number_format($total, 2, ',', '.') . "\n";
+        echo "Compra finalizada com sucesso!\n";
 
         break;
 
@@ -137,14 +178,13 @@ do {
         echo "Saindo...\n";
         break;
 
+    // Opção inválida
     } else {
 
         echo "Opção inválida!\n";
-        continue;
     }
 
-} while ($opcao != 4 && $opcao != 0); //&& : para o resultado set verdadeiro, todas as combinaçoes tem que ser verdadeiras
+} while ($opcao != 4 && $opcao != 0);
 
 ?>
 ```
-
