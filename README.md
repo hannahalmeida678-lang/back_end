@@ -1,4 +1,4 @@
-# cUrso backEnd - 225hrs - tecnico em desenvolvimento de sistema -SENAI
+# Curso backEnd - 225hrs - tecnico em desenvolvimento de sistema -SENAI
 
 profº diogo TB
 
@@ -56,7 +56,7 @@ graph TD
     B --> |response| A
 ```
 
-# aula 2: como funciona  na pratica o backend
+#### aula 2: como funciona  na pratica o backend
 
 **Acao do usuario**: envia uma soliçitação pela UI (interface do usuario). 
 ### Exemplo:
@@ -134,11 +134,11 @@ php --version
 |operador | nome| exemplo | resultado|
 | - | - | - | - |
 | + | adição | 10 + 5 | 15 |
-|- | subtraçao | 10-5 | 5 |
-| * | multiplicação | 10*5 | 50 |
+|- | subtraçao | 10 - 5 | 5 |
+| * | multiplicação | 10 * 5 | 50 |
 | / | divisão | 10/5 | 2|
-| % | modulo(resto) | 10%3 | 1 (10 div 3 da 3 sobra 1)
-| ** | expoente | 2**3 | 8(2 elevado a 3)
+| % | modulo(resto) | 10 % 3 | 1 (10 div 3 da 3 sobra 1)
+| ** | expoente | 2 ** 3 | 8(2 elevado a 3)
 
 obs: o operador % e melhor amigo de um programagor, permite ordenar listas e organizar fila e pilhas
 
@@ -169,7 +169,7 @@ obs: o operador % e melhor amigo de um programagor, permite ordenar listas e org
      - !true => false
      - !false => true
 
-     # semana 3 - Estrutura de Controle de Dados (Condicionais e Repetição)
+     ### semana 3 - Estrutura de Controle de Dados (Condicionais e Repetição)
 
      - **Conteúdo**: Estrutura `if`, `else`, `elseif`, operadores ternarios, `match` => substituto do `switch/case` , loops `for`, `while`, `do-while` e `foreach`
 
@@ -462,9 +462,187 @@ foreach ($preços as $produto => $preço){
 ```
 Desafio: fazer um simulador de cobrança (FINANSENAI)
 
+---
 
-### correçao
+---
+
+### semana 4: modularização com funções
+
+#### principio do DRY ( dont repeat) yourself
+
+se uma logica for escrita duas vezes ou mais dentro de um codigo, essa logica deve virar uma função
+
+#### Funções nativas do PHP
+
+O PHP tem milhares de funções prontas, essas funções são chamadas de nativas.
+
+- **O que é uma função**
+
+Uma função é como uma máquina: vocÊ coloca uma materia prima(parâmetro), ele processa e devolve um produto final
+
+Exemplo de função nativa
 
 
+```php 
+
+$texto = "senai americana";
+
+//str_replace(busca um pedaço do texto e substitui por outro)
+$textoNovo = str_replace("americana","São Paulo",$texto);
+
+//strotoupper
+echo strtoupper($textoNovo);// SENAI SÃO PAULO
+
+```
+
+##### Principais Funções Nativas ( Mais Utilizadas )
+
+As funções abaixo já fazem parte do PHP e podem ser chamadas diretamente no código. Observe os parâmetros que cada uma recebe e o tipo de informação que ela retorna.
+
+| Função | Categoria | O que faz | Como usar |
+|---|---|---|---|
+| `strlen()` | Strings | Retorna a quantidade de caracteres de um texto. | `$tamanho = strlen($texto);` |
+| `strtoupper()` | Strings | Converte o texto para letras maiúsculas. | `$resultado = strtoupper($texto);` |
+| `strtolower()` | Strings | Converte o texto para letras minúsculas. | `$resultado = strtolower($texto);` |
+| `ucfirst()` | Strings | Converte a primeira letra do texto para maiúscula. | `$resultado = ucfirst($texto);` |
+| `trim()` | Strings | Remove espaços e quebras de linha no início e no fim do texto. | `$limpo = trim($texto);` |
+| `str_replace()` | Strings | Substitui uma parte do texto por outra. | `$novo = str_replace("-", "", $cpf);` |
+| `substr()` | Strings | Extrai uma parte do texto a partir de uma posição. | `$inicio = substr($texto, 0, 3);` |
+| `explode()` | Strings | Divide um texto e cria um array usando um separador. | `$palavras = explode(" ", $nome);` |
+| `implode()` | Arrays | Junta os itens de um array em um único texto. | `$lista = implode(", ", $nomes);` |
+| `count()` | Arrays | Conta a quantidade de itens de um array. | `$total = count($produtos);` |
+| `in_array()` | Arrays | Verifica se um valor existe dentro de um array. | `$existe = in_array("SP", $estados, true);` |
+| `array_push()` | Arrays | Adiciona um ou mais itens ao final de um array. | `array_push($nomes, "Ana");` |
+| `array_pop()` | Arrays | Remove e retorna o último item de um array. | `$ultimo = array_pop($nomes);` |
+| `sort()` | Arrays | Ordena um array em ordem crescente e reorganiza suas chaves. | `sort($notas);` |
+| `array_keys()` | Arrays | Retorna um array contendo as chaves de outro array. | `$chaves = array_keys($produtos);` |
+| `number_format()` | Números | Formata um número com casas decimais e separadores definidos. | `$preco = number_format($valor, 2, ',', '.');` |
+| `round()` | Números | Arredonda um número para a quantidade de casas informada. | `$media = round($nota, 2);` |
+| `max()` | Números | Retorna o maior valor de uma lista ou array. | `$maior = max($notas);` |
+| `min()` | Números | Retorna o menor valor de uma lista ou array. | `$menor = min($notas);` |
+| `is_numeric()` | Validação | Verifica se o valor é um número ou uma string numérica. | `if (is_numeric($entrada)) { ... }` |
+| `isset()` | Validação | Verifica se uma variável existe e não possui valor `null`. | `if (isset($usuario)) { ... }` |
+| `empty()` | Validação | Verifica se uma variável está vazia. | `if (empty($pedido)) { ... }` |
+| `date()` | Data e hora | Formata uma data ou hora conforme uma máscara. | `$hoje = date('d/m/Y');` |
+| `file_exists()` | Arquivos | Verifica se um arquivo ou diretório existe. | `if (file_exists('dados.txt')) { ... }` |
+| `file_get_contents()` | Arquivos | Lê todo o conteúdo de um arquivo ou endereço. | `$conteudo = file_get_contents('dados.txt');` |
+| `file_put_contents()` | Arquivos | Grava conteúdo em um arquivo, criando-o se necessário. | `file_put_contents('log.txt', $mensagem);` |
+
+**Atenção:** algumas funções modificam o array original, como `sort()`, `array_push()` e `array_pop()`. Já outras retornam um novo valor, como `count()`, `explode()` e `str_replace()`. Em caso de dúvida, consulte a documentação oficial do PHP e verifique o retorno da função.
+
+##### Documentação PHP
+
+[Acesse a doumentação oficial do PHP em português](https://www.php.net/manual/pt_BR/)
+
+Consulte também a [referencia do PHP](https://www.php.net/manual/pt_BR/funcref.php) para pesquisar a sintaxe, parâmetros e os valores por cada função.
 
 
+---
+
+### Funções customizadas (Criando suas proprias máquinas).
+
+Quando o PHP não tem a funçao que queremos, nos a criamos
+
+**Regra de ouro**: Uma função deve focar em `return`(retornar um valor), e nao imprimir(`echo`).
+
+Veja a diferença neste exemplo:
+```php
+    function calculartotal($preço, $quantidade){
+        return $preço * $quantidade; // a função calcula e rotna o resultado, mas não imprime nada
+    }
+
+    $total = calculartotal(25.00,3);
+    echo "Total da compra: R$ " . number_format($total, 2, ",", ".");
+  //total da compra : R$ 75,00
+```
+A função `calculartotal` pode ser reutilizada em uma pagina, relatorio ou teste. O `echo` aparece somente fora da função, no momento de representar o resultado ao usuário
+
+
+##### Padrao de uso corporativo (PHP 8 strict Types)
+
+No mercado de trabalho, exigimos que a função avise exatamente o **TIPO** de dado que ela espera receber e o que ela vai devolver
+
+Isso é chamado de **Tipagem de funções**. Ao declarar os tipos, o codigo fica mais faciç de entender e o PHP condegue identificar alguns erros antes que eles causem problemas maiores no sistema.
+
+os tipos m,ais usados:
+
+* `int`: numero inteiro, `10` ou `1024
+* `float`; numrero decimal ou ponto flutuamte `10.50`;
+* `string`: texto, como `"maria"`;
+* `bool`: valor logico, `true` ou `false`;
+* `void`: identifica que a função não devolve nenhum valor;
+
+o tipo deve ser descrito antes do nome de cada parametro e o tipo da função deve ser escrito apos os parênteses precedido por `:` informando o que a função vai devolver.
+
+Exemplo de uso:
+```php
+function apresentarProduto(string $nome, float $preco): string{
+    return "$nome custa R$ $preco";
+}
+$mensagem = apresentaProduto("caderno", 25.90);
+echo mensagem;
+//caderno custa R$25.90
+```
+
+> **resumo**: os tipos dos parametros documantam as entradas da função, o tipo após `:` documeta a saída da função 
+
+##### o tipo magico : `void`
+
+Seuma funçaõ faz um trabalho interno e **não retorna nada**, dizemos quew o retorno dela é "vazio" (`void`)
+
+Exemplo de funçao sem retorno:
+
+```php
+function registroLog(string mensagem): void{
+    //apenas salvar em um arquivo de texto, não devolve nenhuma variavel
+    file_put_contents("erro.log", $mensagem);
+}
+```
+
+
+####  Escopo e Referencia (o segredo da memoria)
+
+##### o  que é Escopo? (A Regra de Las Vegas)
+
+*O que acontece dentro da função, fica na função*. Uma variavel criada fora não existe lá dentro, e uma criada lá dentro morre quando a função acaba.
+
+**Escopo** é o local do programa onde a variavel pode ser armazenada/acessada. Em PHP, uma variável criada fora de uma função pertende ao **escopo global**. uma variável criada dentro de uma função, pertence ao **escopo local**
+
+Exemplo de escopo de variaval:
+
+```php
+$nomeSistema = "CRM Senai";//variavel global
+
+function criarMensagem(): string{
+    $mensagem = "bem-vindo";
+    return $mensagem
+}
+echo $nomeSistema; //Correto: esta no escopo global
+echo criarMensagem(); //Correto: a função devolve sua variável local.
+echo $mensagem//incorreto, $mensagem só existe dentro da função, nao é acessada fora da função
+```
+
+* como enviar dados em uma função?
+
+A forma mais segura e organizada é enviar os dados por **parametros**. assim, a função nao precisa acessar diratamente, variaveis globais
+
+```php
+function saudar(string $nome): string{
+    return "ola, $nome"
+}
+$nomeCliente = "João";
+echo saudar($nomeCliente); // Olá, João!
+```
+Nesse caso, $nomeCliente continua no escopo global mas seu valor é enviado para o para,metro local $nome`. A função recebe uma informação, processa e retorna o resultado
+
+Exemplo incorreto:
+
+```php
+$nome =  "joão";
+function saudar():string{
+    return "Olá, $nome";
+}
+```
+A função `saudar()` não conhece a variavel global `$nome`
+
+> **Resumo:** variáveis protegem os dados internos da função; parâmetros são o caminho recomendado para evitar Erros e enviar Informações, e o `return` é usado para devolver um resultado ao codigo que chamou a função.
