@@ -93,3 +93,22 @@ $valor = 100.00;
 echo aplicarDesconto($valor);
 echo $valor;
 ```
+
+10 - Documentação: Pesquise na documentação oficial do PHP a função strlen() e anote sua sintaxe, o parâmetro recebido e o tipo de retorno.
+
+
+a função `strlen` serve para retornar o valor de uma string em bytes, EX:
+
+```php
+#include <stdio.h> <--o arquivo de cabeçalho padrão da linguagem C que gerencia operações de entrada e saída de dados
+#include <string.h>
+
+int main() {
+    char texto[] = "Olá, mundo!";
+    int tamanho = strlen(texto);
+    
+    printf("O texto tem %d caracteres.\n", tamanho);
+    return 0;
+}
+// Saída: O texto tem 11 caracteres.
+```

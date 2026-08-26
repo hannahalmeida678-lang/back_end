@@ -28,8 +28,10 @@ $opcao = readline();
 if($opcao==1){
     echo $produtos
 
-}  else if($opcao==2){
+}  
+else if($opcao==2){
     echo "Escolha os Produtos";
-}else
+} else
 
-} while($opcao=="0");
+ while($opcao=="0");
+ 
