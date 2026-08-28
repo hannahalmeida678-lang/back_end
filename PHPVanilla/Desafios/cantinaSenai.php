@@ -1,4 +1,4 @@
-```php
+
 <?php
 
 // Array com os produtos da cantina
@@ -240,4 +240,4 @@ do {
 echo "\nPrograma encerrado.\n";
 
 ?>
-```
+
