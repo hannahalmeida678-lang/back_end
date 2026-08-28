@@ -10,7 +10,7 @@ $peso1 = 70;
 $altura1 = 1.75;
 $imc1 = calcularImc($peso1, $altura1);
 
-echo "IMC equivale a: " . number_format($imc1, 2, ',', '.') . "<br>";
+echo "IMC equivale a: " . number_format($imc1, 2, ',', '.');
 
 
 // Teste 2
@@ -18,7 +18,7 @@ $peso2 = 60;
 $altura2 = 1.65;
 $imc2 = calcularIMC($peso2, $altura2);
 
-echo "IMC 2: " . number_format($imc2, 2, ',', '.') . "<br>";
+echo "IMC 2: " . number_format($imc2, 2, ',', '.');
 
 // Teste 3
 $peso3 = 90;

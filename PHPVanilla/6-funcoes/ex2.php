@@ -21,10 +21,10 @@ $imc2 = 22.5;
 $imc3 = 27.5;
 $imc4 = 32.0;
 
-echo "IMC 1: " . classificarIMC($imc1) . "<br>";
-echo "IMC 2: " . classificarIMC($imc2) . "<br>";
-echo "IMC 3: " . classificarIMC($imc3) . "<br>";
-echo "IMC 4: " . classificarIMC($imc4) . "<br>";
+echo "IMC 1: " . classificarIMC($imc1);
+echo "IMC 2: " . classificarIMC($imc2);
+echo "IMC 3: " . classificarIMC($imc3);
+echo "IMC 4: " . classificarIMC($imc4);
 
 ?>
 

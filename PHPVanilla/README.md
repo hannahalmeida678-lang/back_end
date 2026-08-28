@@ -646,3 +646,6 @@ function saudar():string{
 A função `saudar()` não conhece a variavel global `$nome`
 
 > **Resumo:** variáveis protegem os dados internos da função; parâmetros são o caminho recomendado para evitar Erros e enviar Informações, e o `return` é usado para devolver um resultado ao codigo que chamou a função.
+
+## introdução git/github
+
