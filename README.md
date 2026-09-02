@@ -399,7 +399,7 @@ while(numeroEscolhido != numeroSecreto){
     tentativas++;
 }
 
-echo "Acertou Miseravi!!! o nº secreto é $numeroEscolhido";
+echo "Acertou ! o nº secreto é $numeroEscolhido";
 
 ```
 
