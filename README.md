@@ -838,3 +838,53 @@ echo print_r($fruta);
 echo var_dump($frutas);
 // mostra tudo sobre a variavel: tipo de dados, tamanho e valor
 ```
+
+---
+
+### semana 6 - Processamento HTTP e formularios web
+
+#### anatomia de um formulario html para Backend
+
+- Antes do `php` processar qualquer informação, precisamos coletar informações no FrontEnd através de um `<form>`
+
+**Exemplo de form em html**:
+
+```html
+<form action="processar.php" method="POST">
+    <label>Nome completo</label>
+    <input type:"text" id="campoNome" name="nomeUsuario" placeholder="Digite seu Nome"> 
+    <button type="submit">Cadastrar</button>
+</form>
+```
+
+**os tres pilares de um formulario**:
+
+1. action="processar.php" -> O Destino: define qual script php no servidor recebera os dados.
+2. method="POST" -> O Transporte: Define a via de protocolo HTTP que será usada (GET ou POST)
+3. name="nomeUsuario" -> a etiqueta de dado: o nome da chave que o php usará no array associativo($_POST["nomeUsuario"])
+
+> obs: nunca confundir `id` com `name` no input, o PHP ignora o `id`.
+
+#### o protocolo http
+
+Quando o usuário clica no botão `type="submit"`, o navegado compila todas as informações dos campos preenchido e dispara um pacote de comunicação padronizado pelo **Protocolo HTTP(Hypertext Transfer Protocol)**.
+
+**os formatos de transferencia** 
+
+* **Metodo get**: solicita informaçoes publicas e realiza buscas, mas altamente arriscado para dados privados.
+
+* **Método POST**: As informações viajam guardadas dentro do protocolo. 
+
+
+#### Testar o uso dos Protocolos HTTP
+OK
+
+#### GET vs. POST
+
+1. O Método GET(Consultas e Filtros)
+
+O  método `GET`é utilizado quando a intenção do cliente é **buscar ou filtrar dados** sem alterar o estado do servidor. Os dados enviados via `GET` são anexados ao final da URL na forma de uma **QUERY String**
+
+2. O Método POST (Envio de Cargas Úteis e Mutações)
+
+O método `POST` é utilizado quando o formulário envia dados que devem ser processados para **criar ou modificar registros no sistema** (Ex: Cadastro de usuários, finalizações de compra, upload de arquivos.)

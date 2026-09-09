@@ -29,14 +29,14 @@ echo "Total de entradas: R$ " . number_format($totalEntradas, 2, ",", ".") . "<b
 echo "Total de saídas: R$ " . number_format($totalSaidas, 2, ",", ".") . "<br>";
 echo "Saldo atual: R$ " . number_format($saldoAtual, 2, ",", ".") . "<br>";
 
-echo "-------------------------<br>";
+echo "-------------------------";
 
 foreach ($extrato as $transacao) {
-    echo "Data: " . $transacao["data"] . "<br>";
-    echo "Descrição: " . $transacao["descricao"] . "<br>";
-    echo "Tipo: " . $transacao["tipo"] . "<br>";
-    echo "Valor: R$ " . number_format($transacao["valor"], 2, ",", ".") . "<br>";
-    echo "-------------------------<br>";
+    echo "Data: " . $transacao["data"];
+    echo "Descrição: " . $transacao["descricao"];
+    echo "Tipo: " . $transacao["tipo"];
+    echo "Valor: R$ " . number_format($transacao["valor"], 2, ",", ".");
+    echo "-------------------------";
 }
 
 $gastosAltos = array_filter(
@@ -44,12 +44,12 @@ $gastosAltos = array_filter(
     fn($transacao) => $transacao["tipo"] == "Saida" && $transacao["valor"] > 100
 );
 
-echo "Atenção: Gastos Altos do Mês<br>";
+echo "Atenção: Gastos Altos do Mês";
 
 foreach ($gastosAltos as $gasto) {
-    echo "Descrição: " . $gasto["descricao"] . "<br>";
-    echo "Valor: R$ " . number_format($gasto["valor"], 2, ",", ".") . "<br>";
-    echo "-------------------------<br>";
+    echo "Descrição: " . $gasto["descricao"];
+    echo "Valor: R$ " . number_format($gasto["valor"], 2, ",", ".");
+    echo "-------------------------";
 }
 
 ?>
