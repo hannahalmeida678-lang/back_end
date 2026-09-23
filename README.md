@@ -971,3 +971,183 @@ a técnica do **stick form** consiste em imprimir de folta o atributo value do i
 </div>
 
 ```
+
+
+### semana 7:segurança no Backend - sanitização, validaçao e proteção contra XSS
+
+#### 1º mandamento do desenvolvedor Backend
+
+> Nunca confie no usuario: toda entrada de dados vindo de fora do servidor é potencialmente maliciosa até que seja rigorozamente validada, sanitizada e codificada.
+
+quando voce disponibiliza um campo de texto em um site, qualqeur pessoa conectada á internet pode digitar codigos maliciosos em vez de texto.Se o codigo Back end pega este texto diretamente, sem nenhum tratamento, a ordem de execussão de codigo abrirá porta para a invasão devastadora do seu sistema.
+
+#### A anatomia de um ataque: o que é Cross-Site-Scripting
+
+O XSS ocorre quando uma aplicação web inclui dados não confiaveis sem a devida validação ou escape de caracteres. isso permite que um atacante execute scripts maliciosos(geralmente em java script) diretamente no navegador de outro usuário que visitam o site.
+
+**as princippais modalidades de ataque:**
+1. Roubo de sessão(cookies Stealing): o javascript injetado lê os cookies de autenticação da vitima(FDocument.cookie) e os envia para o servidor do atacante , permitindo que ele faça login na conta da vítima sem precisar de senha.
+
+2. *Desconfiguração do Site(Defacement)*: Altera visualmente o site, inserindo mensagens falsas, banners ofensivos ou formulários de login fradulentos(phising intreno) 
+
+3. *Redirecionamento Malicioso*: Força o navegador da víima a abrir site com viros ou pagina clonada de banco
+
+4. *captura de teclas(Keylogger)*: grava tudo o que a vitima digita enquanto a pagina estyá aberta.
+
+
+**Os Vetores de Ataques Mais Frequentes:**
+
+Nem todo ataque XSS usa a tag óbvia `<script>`. Desenvolvedores que tentam bloquear XSS apenas "apagando a palavra script" são facilmente burlados por atacantes:
+
+| Vetor de Injeção | Como funciona o ataque? |
+| :--- | :--- |
+| `<script>alert('XSS')</script>` | Injeção direta de bloco de script executável pelo navegador. |
+| `<img src="invalido.jpg" onerror="alert('XSS')">` | O navegador tenta carregar a imagem inexistente e dispara o evento `onerror` com o JavaScript. |
+| `<svg onload="alert('XSS')">` | O navegador renderiza o elemento gráfico SVG e executa o evento `onload`. |
+| `<a href="javascript:alert('XSS')">Clique</a>` | O clique no link executa a pseudo-URL com JavaScript em vez de abrir um site. |
+| `"><script>alert('XSS')</script>` | Usado quando o dado é impresso dentro de um `<input value="...">`, quebrando o atributo e injetando a tag. |
+
+#### **A Tríade da Defesa: Validação, Sanitização e Escapamento**
+
+
+```mermaid
+
+flowchart 
+    A[Entrada de Dados GET/POST] 
+    B{1. Validação}
+    C[2. Sanitização]
+    D[Processamento]
+    E[3. Escapamento]
+    F[HTML]
+
+    A --> B
+    B -- (Inválido)-Rejeita e devolve o Erro --> A
+    B -- (Válido) --> C
+    C -- (Limpo e Formato) --> D
+    D --> E
+    E -- Converte caracteres antes do HTML --> F
+```
+
+1. **VALIDAÇÃO**: verifica se o dado recebido atende aos requisitos exatos do sistema (tipo, tamanho, formato).
+
+EX: erificar se o e-mail possui `@` e dominio válido (`filter_var($email, FILTER_VALIDATE_EMAIL)`).
+
+2. **Sanitização**: Transforma o dado para adequa-lo ao formato desejado, removendo caracteres indesejados.
+
+Ex: remover espaços no inicio e fim (`trim($nome)`)
+
+3. **Escapamento/Codificação de Saída**: é o ato de converter caracteres de linguagem HTML em suas respectivas **entidades HTML** no momento exato em que eles são impressos na tela 
+
+Ex: usar `htmlspecialchars()`
+
+#### **a ferramanta principal: `htmlSpecialchars()`**
+
+a funçaõ `htmlSpecialchars()` é o principal mecanismo em php para neutralizar XSS na camada de apresentação
+
+**Como a conversao de entidades funciona**
+
+| Caractere Original | Entidade HTML Gerada | Efeito no Navegador |
+| :---: | :---: | :--- |
+| `<` | `&lt;` (*Less Than*) | O navegador exibe `<` na tela, mas **não cria uma tag**. |
+| `>` | `&gt;` (*Greater Than*) | O navegador exibe `>` na tela sem fechar tags. |
+| `"` | `&quot;` (*Quotation Mark*) | Não quebra atributos HTML `<input value="...">`. |
+| `'` | `&#039;` ou `&apos;` | Protege strings envoltas em aspas simples. |
+| `&` | `&amp;` (*Ampersand*) | Evita interpretação incorreta de entidades. |
+
+**A Sintaxe no PHP**
+
+```php 
+string htmlspecialchars(
+    string $string,
+    int $flags = ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5,
+    ?string $enconding = "UTF-8"
+)
+```
+- **`ENT_QUOTES`**: Converte tatos aspas duplas quanto aspas simples. Essencial para saídas em atributos HTML
+- **`ENT_SUBSTITUTE`**: Substitui sequências de bytes inválidos por caracteres de substituição Unicode em vez de retornar uma string vazia
+- **`ENT_HTML5`**: aplica a tabela de entidades compativeis com a especificação HTML5
+- **`UTF-8`**: Garante que caracteres da lingua portuguesa (como "ç", "ã", "é") sejam preservados sem corrupção
+
+**A função Helper de escapamento**
+
+para não precisar digitar essa linha extensa em todas as parte de saída de texto para HTML, os desemvolvedores proffisionais criam uma função auxiliar curta:
+
+```php
+function e(string $texto):string {
+    return htmlspecialchars($texto, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, "UTF-8");
+
+}
+
+<p>Comentário: <?= e($comentarioUsuÁRIO) ?>
+</p>
+<input type="text">
+```
+#### **Validação e Sanitização com `filter_var()`**
+
+O PHP possui a biblioteca de filtros nativos `filter_var()`. Observe os filtros mais importantes do ecossistema corporativo:
+
+```php
+<?php
+declare(strict_types=1);
+
+// 1. Validação de E-mail
+$email = "usuario.teste@senai.br";
+if (filter_var($email, FILTER_VALIDATE_EMAIL) !== false) {
+    // E-mail válido
+}
+
+// 2. Validação de Número Inteiro com Limites (Range)
+$idade = "25";
+$opcoesIdade = [
+    'options' => [
+        'min_range' => 16,
+        'max_range' => 120
+    ]
+];
+if (filter_var($idade, FILTER_VALIDATE_INT, $opcoesIdade) !== false) {
+    // Idade é um inteiro entre 16 e 120
+}
+
+// 3. Validação de URLs (Links)
+$website = "https://www.sp.senai.br";
+if (filter_var($website, FILTER_VALIDATE_URL) !== false) {
+    // URL possui protocolo e formato válidos
+}
+
+// 4. Validação de Endereço IP
+$ip = "192.168.1.100";
+if (filter_var($ip, FILTER_VALIDATE_IP) !== false) {
+    // IP válido
+}
+```
+
+### semana 8 -  Persistência de Dados com Banco de Dados Relacionais (PostgreSQL) e Conexão PDO
+
+**Tema:** Camada de acesso a Dados, DriverPDO(PHP Data Objects), Driver `pdo_pgsql`, Padrão Singleton, Isolamento de Credenciais(.env .ini) e tratamento de excessoes(PDOExeption)
+
+#### **1. da memoria volátil ao Banco de Dados**
+
+Em sistemas corporativos de grande porte, arquivos planos (`.txt` `.json`) nao oferece a segurança, integridade, concorrencia e velocidade necessária para armazenamento de dados. Então é aq que o **Backend** encontra o **Banco de dados relacional**.
+
+
+Banco de dados relacional permite:
+- conectar a logica de programação server-side ao sistema de gerenciamento de banco de dados (sgbd)
+ Garantindo persistÊncia definitiva e segura dos registros.
+- Aplicando integridade referencial, constraints, consultas otimizadas e produtividade ACID aprendidasd na disciplina de banco de dados.
+
+> obs: ACID:
+> atomicidade, asegura que cada transação seja unica.
+> consistencia, respeita todas as regras , restrições e chaves definidas, garantindo a validade da transação.
+> isolamento, transacoes sao confirmadas, garantindo persistencia permanente.
+
+```mermaid
+flowchart LR
+    navegador[Navegador Web - Cliente/Front]
+    servidor[Servidor PHP - BackEnd - Regras de Negócio]
+    banco[SGBD - Base de Dados Persistentes]
+
+    navegador --> |"Requisição HTTP"| servidor
+    servidor --> |" query - Driver PDO"| banco
+    banco --> |"response - Driver PDO"| servidor
+    servidor --> |"Resposta HTML/JSON"| navegador
+```
