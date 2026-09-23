@@ -1151,3 +1151,144 @@ flowchart LR
     banco --> |"response - Driver PDO"| servidor
     servidor --> |"Resposta HTML/JSON"| navegador
 ```
+#### **2. O que é o PDO(PHP Data Object)?**
+
+O **PDO** é uma camaada de abstração de acesso a dados integrada nativamente ao PHP. Ele fornece uma interface uniforme e orientada a objetos para se comunicar com múltiplos sistemas de banco de dados (PostgreSQL, MySQL, SQLite, OracleSQL, SQLServer).
+
+```mermaid
+flowchart TB
+    aplicacao[Aplicação PHP - Controlles, Service, Models]
+    pdo[Interface PDO - Métodos: query, prepare, execute]
+
+    driverpgsql[Driver PDO_PGSQL]
+    drivermysql[Driver PDO_MYSQL]
+    driveroci[Driver PPDO_ORACLESQL]
+
+    postgres[Banco PostgreSQL]
+    mysql[Banco MySQL]
+    oracle[Banco OracleSQL]
+
+    aplicacao --> pdo
+    pdo --> driverpgsql
+    pdo --> drivermysql
+    pdo --> driveroci
+    driverpgsql --> postgres
+    drivermysql --> mysql
+    driveroci --> oracle
+
+```
+#### **3. vantagens do uso do PDO**
+
+- **portabilidade de codigo**; os métodos de conexão, consulta e trasaçoes sao identificados, idenpendente do banco utilizado. Se o cliente migrar de banco postgres para outro SGBD(MySQL), o programador apenas altera a string DNS de conexão, preservando toda a logica de acesso ja utilizada ou criada.
+- **suporte nativo a prepared statement**: o pdo foi projetado para trabalhar com consultas nativas, oferecendo defesa contra ataques de **SQL_injection**.
+- **tratamento orientado a objetos com exeption**: em vez de retornar codigos de erros, o pdo lança uma distancia da classe especializada em `PDOException`.
+
+**A Sintaxe da Conexão PDO: DSN(Data Source Name)**
+
+Para que o PDO saiba onde o banco está localizado, em qual porta abrir, utilizamos a string padronizada **DSN**.
+
+```text
+pgsql:host=127.0.0.1;port=5432;dbname=seu_banco
+  |          |            |           |
+  |          |            |           └─ Nome da base de dados ralacional(nome do banco)
+  |          |            └─ Porta padrão do Banco de Dados PostgreSQL(5432)
+  |          └─ Endereço IP ou hostname do servidor
+  └─ Identificador do driver do SGBD(pgsql) - PostgreSQL
+```
+
+#### **4. A Configuração do PDO**
+
+Ao instanciar um objeto PDO, devemos configurar quadro flags essenciais que determinam como o driver de comportará frente a erro e consultas ao SGBD
+
+```php
+$opcoes = [
+    //1. flag: Lança exceções imediatamente quando ocorrer qualquer erro SQL
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+
+    //2. Retorna registros apenas com nomes das colunas (Eliminar duplicidade numérica)
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+
+    //3. Desatica emulação e utiliza prepared statements nativos 
+    PDO:: ATTR_EMULATE_PREPARES => false,
+
+    //4. Limita a 5 segundos para tentar a conexão com o servidor do BD
+    PDO:: ATTR_TIMEOUT => 5
+];
+```
+
+**Detalhamento das Flags**:
+
+- PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION : por padrão o PDO pode falhar silenciosamente e retorna apenas `false`. Ao Ativar o ERR_MODE força o PHP a dispara uma `PDOException`, permitindo que o nosso código interprete qualquer erro em um bloco `try-catch`.
+
+- PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC : por padrão o métos `fetch()`retrona um array duplicado ontendo índices numéricos`[0,1]`e associativos`["id","código_maquina"]`. Definir `FETCH_ASSOC`reduz o consumo de memória RAM pela metade e entrega coleções limpas.
+
+- PDO::ATTREMULATE_PREPARES => false : Garante que o PHP envie a consulta e os parêmtros separados diretamente para o planejador do BD processar, blindando e aplicação contra ataques sofisticados de `SQL_injection`
+
+#### **5. Proteção de Credenciais**
+
+Um dos erros mais graves cometidos por desenvolvedores iniciantes é escrever dados de conexão diretamente dentro do código:
+
+```php
+//pessima pratica de codigo
+$pdo = new PDO("pgsql:host=localhost; dbname="producao"; "postgres"; "senha12345");
+//observer que as credenciasi estão expostas nos código
+```
+
+Se esse arquivo for versionado e enviado para GitHub:
+1. Suas senhas de produção ficam públicas
+2. Robôs maliciosos varrem repositórios à procura de credenciais expostas, para invadir banco de dados e sequestrar informações(ataque de Ransoware)
+3. A empresa é penalisada pela violação da **LGPD(lei geral de proteção de dados)**
+
+**a abordagem segura: usando arquivos de configuraçaõ isolada (`.ini.`.env`)**
+
+Isolamos as credenciais em um arquivo externo protegido que **nunca entra no Git**
+
+```ini
+; config/database.ini
+[database]
+dab_driver = pgsql
+db_host    = 127.0.0.1
+db_port    = 5432
+db_name    = producao
+db_user     = postgres
+db_pass     = senha12345
+```
+
+adicionamos o arquivo ilolado ao `.gitiginore`
+
+```text
+config/database.ini
+.env
+logs/*.log
+```
+
+
+#### **¨. padrão singleton de conexão**
+
+imagina uma aplicação web com 500 usuarios acessando simultaneamente. se cada sript, função ou metodo executar `new PDO()`, ou seja, abrir uma nova conexão, sempre que precisa consultar o banco de dados, teremos milhares de conexão de redes abertas desnecesariamentes.
+
+no SGBD(postgresSQL), cada conexão aberta cria um processo no sistema operacional dedicado. abrir conexões repetidas esgotam rapidamente o limite configurado(``max_connection`) do BD gerando um erro : 
+`fatal error: sorry, too many clients already`
+
+**como o singleton resolve isso**
+
+o padrao **singleton** garante que **apenas uma unica distância de conexão pdb exista por requisiçao**, reutiçizando a conexão existente em qualquer ponto do sistema.
+
+**as configurações do singleton**
+1. **construtores privados** (`private function _constructor`): Impede que outros arquivos instanciem uma nova conexão
+2. **Propriedade/Atributos Estáticas Privadas**: (`private static ?PDO $instancia = null`): Aramzena a Conexão aberta na Classe
+3. **Métodos de acesso Estáticos Públicos**: (`public static function obterConexão(): pdo`): a conexão é criada pelo método, garantindo acesso a conexão, mas não acesso aos atributos da conexão, se caso já existir uma conexão, apenas devolve a conexão existente para o operador, sem a necessidade de crir uma nova.
+4. **Bloqueio de Clonagem e Desserialização**: (`_clone` e `_wakeup`): Garantir que ninguém consiga duplicar o objeto da conexão.
+
+#### **7. tratamento de falha com `PDOexception`
+
+quando uma tentativa de conexão falha (servidor desligado, senha incorreta, porta inacessivel ...), o PDO lança uma exceção (`PDOException`). Então, devemos tratar essas falhas.
+
+**Práticas recomendadas de segurança** (AppSec):
+
+* **Para o Usuário**: Exibir mensagens amigáveis e genéricas: *Não é possível processar sua solicitação. Tente novamente mais tarde*
+
+* **para a equipe de desenvolvimento**: Grava os detalhes técnicos da falha com timestamp(carimbo de data e hora) em um arquivo de log seguro (`log/database.log`);
+
+---
+
