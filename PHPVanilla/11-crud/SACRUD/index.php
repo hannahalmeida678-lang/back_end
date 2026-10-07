@@ -63,6 +63,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $acao === "salvar") {
     }
 }
 
+$conectado = false;
+$peças = [];
+$mensagemErro= "";
+ 
+
 // Processo de Busca por termmo 
 $termoBusca = trim($_GET["busca"] ?? "");
 $pecas = !empty($termoBusca) ? $pecaDAO->buscarPorTermo($termoBusca) : $pecaDAO->listarTodos();
@@ -70,7 +75,7 @@ $pecas = !empty($termoBusca) ? $pecaDAO->buscarPorTermo($termoBusca) : $pecaDAO-
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
-
+ 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
